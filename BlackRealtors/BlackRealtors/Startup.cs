@@ -1,5 +1,7 @@
 using AutoMapper;
 using BlackRealtors.BLL;
+using BlackRealtors.Core.Configurations;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+
 using Unity;
 
 namespace BlackRealtors
@@ -68,14 +72,19 @@ namespace BlackRealtors
             });
         }
 
-        /*public void ConfigureContainer(IUnityContainer container)
+        public void ConfigureContainer(IUnityContainer container)
         {
-            container.RegisterInstance(SetupMapper());
+            //container.RegisterInstance(SetupMapper());
 
-            Facade.RegisterDependecies(container);
+            var yandexMapsApiConfig = new YandexMapsApiConfiguration();
+            Configuration.GetSection("YandexMapsApiConfiguration").Bind(yandexMapsApiConfig);
+
+            container.RegisterInstance(Options.Create(yandexMapsApiConfig));
+
+            Facade.RegisterDependencies(container);
         }
 
-        private IMapper SetupMapper()
+        /*private IMapper SetupMapper()
         {
             var config = new MapperConfiguration(cfg =>
             {
