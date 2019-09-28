@@ -7,6 +7,9 @@ namespace BlackRealtors.BLL.Services.MapsService
 {
     public interface IMapsService
     {
-        Task<IEnumerable<Coordinates>> SearchOrganizationsByTypeAsync(string organizationType);
+        Task<IEnumerable<Coordinates>> SearchOrganizationsByTypeAsync(
+            string organizationType,
+            string city
+        );
     }
 }

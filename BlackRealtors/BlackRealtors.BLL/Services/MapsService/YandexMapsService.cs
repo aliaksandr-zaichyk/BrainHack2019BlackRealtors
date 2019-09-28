@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -31,14 +30,16 @@ namespace BlackRealtors.BLL.Services.MapsService
         }
 
         public async Task<IEnumerable<Coordinates>> SearchOrganizationsByTypeAsync(
-            string organizationType
+            string organizationType,
+            string city
         )
         {
             using (var client = new HttpClient())
             {
                 try
                 {
-                    if (!OrganizationType.ValidOrganizationType(organizationType))
+                    if (!OrganizationType.ValidOrganizationType(organizationType) ||
+                        !Cities.ValidCity(city))
                     {
                         return Enumerable.Empty<Coordinates>();
                     }
@@ -48,7 +49,7 @@ namespace BlackRealtors.BLL.Services.MapsService
                             $"{GetOrganizationsApi}?" +
                             $"apikey={HttpUtility.UrlEncode(_yandexMapsApiConfiguration.ApiKey)}" +
                             $"&lang={HttpUtility.UrlEncode(_yandexMapsApiConfiguration.Language)}" +
-                            $"&text={HttpUtility.UrlEncode(organizationType + " " + Cities.Hrodna)}" +
+                            $"&text={HttpUtility.UrlEncode(organizationType + " " + city)}" +
                             $"&results=500"
                         );
 
