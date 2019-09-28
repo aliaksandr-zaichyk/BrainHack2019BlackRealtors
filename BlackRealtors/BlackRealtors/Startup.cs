@@ -1,3 +1,5 @@
+using AutoMapper;
+using BlackRealtors.BLL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Unity;
 
 namespace BlackRealtors
 {
@@ -64,5 +67,22 @@ namespace BlackRealtors
                 }
             });
         }
+
+        /*public void ConfigureContainer(IUnityContainer container)
+        {
+            container.RegisterInstance(SetupMapper());
+
+            Facade.RegisterDependecies(container);
+        }
+
+        private IMapper SetupMapper()
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                Facade.RegisterMappings(cfg);
+            });
+
+            return new Mapper(config);
+        }*/
     }
 }
