@@ -24,7 +24,7 @@ class MainComponent extends Component {
     }
 
     let sendObject = {
-      defaultFilteers: filters,
+      defaultFilters: filters,
       customPoints: points
     }
 
