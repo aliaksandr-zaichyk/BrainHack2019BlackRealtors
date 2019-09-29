@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Mime;
 using System.Text;
@@ -47,9 +48,7 @@ namespace BlackRealtors.BLL.Services.PScoreService
                     foreach (var filter in filters)
                     {
                         if (!OrganizationType.ValidOrganizationType(filter.OrganizationType))
-                        {
                             return null;
-                        }
 
                         if (filter.ImportanceLevel != ImportanceLevel.Useless)
                         {
@@ -58,7 +57,7 @@ namespace BlackRealtors.BLL.Services.PScoreService
                                     filter.OrganizationType,
                                     Cities.Hrodna
                                 );
-                            
+
                             pScoreModels.Add(
                                 new PScoreModel
                                 {
@@ -70,8 +69,9 @@ namespace BlackRealtors.BLL.Services.PScoreService
                         }
                     }
 
+                    pScoreModels.AddRange(GetNotSelectedOrganizationTypes(pScoreModels));
+
                     foreach (var coor in customPoints)
-                    {
                         pScoreModels.Add(
                             new PScoreModel
                             {
@@ -79,7 +79,6 @@ namespace BlackRealtors.BLL.Services.PScoreService
                                 ImportanceLevel = ImportanceLevel.High
                             }
                         );
-                    }
 
                     var responseMessage = await client.PostAsync(
                         $"{_pScoreConfiguration.BaseUrl}{PostPizdatiyScoreApi}",
@@ -90,10 +89,7 @@ namespace BlackRealtors.BLL.Services.PScoreService
                         )
                     );
 
-                    if (!responseMessage.IsSuccessStatusCode)
-                    {
-                        return null;
-                    }
+                    if (!responseMessage.IsSuccessStatusCode) return null;
 
                     var response = await responseMessage.Content.ReadAsStringAsync();
                     var weightedCoordinates =
@@ -106,6 +102,64 @@ namespace BlackRealtors.BLL.Services.PScoreService
                     return null;
                 }
             }
+        }
+
+        private IEnumerable<PScoreModel> GetNotSelectedOrganizationTypes(
+            IEnumerable<PScoreModel> selected
+        )
+        {
+            var pScoreModels = new List<PScoreModel>();
+
+            if (selected.FirstOrDefault(x => x.OrganizationType == OrganizationType.Atm) == null)
+                pScoreModels.Add(new PScoreModel {OrganizationType = OrganizationType.Atm});
+
+            if (selected.FirstOrDefault(x => x.OrganizationType == OrganizationType.BeautySalon) ==
+                null)
+                pScoreModels.Add(new PScoreModel {OrganizationType = OrganizationType.BeautySalon});
+
+            if (selected.FirstOrDefault(x => x.OrganizationType == OrganizationType.Fitness) ==
+                null)
+                pScoreModels.Add(new PScoreModel {OrganizationType = OrganizationType.Fitness});
+
+            if (selected.FirstOrDefault(x => x.OrganizationType == OrganizationType.GroceryStore) ==
+                null)
+                pScoreModels.Add(
+                    new PScoreModel {OrganizationType = OrganizationType.GroceryStore}
+                );
+
+            if (selected.FirstOrDefault(x => x.OrganizationType == OrganizationType.Hospital) ==
+                null)
+                pScoreModels.Add(new PScoreModel {OrganizationType = OrganizationType.Hospital});
+
+            if (selected.FirstOrDefault(x => x.OrganizationType == OrganizationType.Kindergarten) ==
+                null)
+                pScoreModels.Add(
+                    new PScoreModel {OrganizationType = OrganizationType.Kindergarten}
+                );
+
+            if (selected.FirstOrDefault(x => x.OrganizationType == OrganizationType.Pharmacy) ==
+                null)
+                pScoreModels.Add(new PScoreModel {OrganizationType = OrganizationType.Pharmacy});
+
+            if (selected.FirstOrDefault(x => x.OrganizationType == OrganizationType.School) ==
+                null)
+                pScoreModels.Add(new PScoreModel {OrganizationType = OrganizationType.School});
+
+            if (selected.FirstOrDefault(x => x.OrganizationType == OrganizationType.ShoppingMall) ==
+                null)
+                pScoreModels.Add(
+                    new PScoreModel {OrganizationType = OrganizationType.ShoppingMall}
+                );
+
+            if (selected.FirstOrDefault(
+                    x => x.OrganizationType == OrganizationType.VeterinaryClinic
+                ) ==
+                null)
+                pScoreModels.Add(
+                    new PScoreModel {OrganizationType = OrganizationType.VeterinaryClinic}
+                );
+
+            return pScoreModels;
         }
     }
 }
