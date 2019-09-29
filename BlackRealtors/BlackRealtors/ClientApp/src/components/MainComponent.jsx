@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import {
-  Row,
-  Col,
-  Card,
-  Button
-} from 'reactstrap';
+import { Row, Col, Card, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Map from './mapComponents/MapComponent';
-import FilterPanel from './filterComponent./FilterPanel';
+import FilterPanel from './filterComponents/FilterPanel';
 import {sendData} from '../actions/actions';
 
 class MainComponent extends Component {
@@ -19,16 +14,21 @@ class MainComponent extends Component {
     let filterNames = document.querySelectorAll('[id=filter]');
     let priorities = document.querySelectorAll('[id=priority]');
 
-    for (let i = 0; i < filterNames.length; i++) {
-      filters.push({ organizationType: filterNames[i].value, importanceLevel: priorities[i].value });
-    }
+        for (let i = 0; i < filterNames.length; i++) {
+            filters.push({
+                organizationType: filterNames[i].value,
+                importanceLevel: priorities[i].value
+            });
+        }
 
-    let sendObject = {
+        let sendObject = {
       defaultFilters: filters,
-      customPoints: points
-    }
+            customPoints: points
+        };
 
     this.props.sendData(sendObject);
+    };
+    HandleApi.sendData(sendObject);
   }
 
   render() {
@@ -65,5 +65,10 @@ const mapDispatchToProps = (dispatch) => {
     sendData: (data) => sendData(data)
   }, dispatch)
 }
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MainComponent);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainComponent);

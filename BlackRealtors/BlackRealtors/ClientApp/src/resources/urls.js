@@ -1,4 +1,4 @@
-export const BASE_SEARCH_URL = '/PScore/';
+export const BASE_SEARCH_URL = '/api/PScore/';
 
 export const YANDEX_API_KEY = 'AIzaSyBxJKSiK4AEJPuf7W3SpqlnJKfANYxiLC8';
 export const YANDEX_LANGUAGE = 'ru';
