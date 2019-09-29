@@ -2,6 +2,7 @@
 {
     public enum ImportanceLevel
     {
+        Useless,
         Low,
         Medium,
         High
