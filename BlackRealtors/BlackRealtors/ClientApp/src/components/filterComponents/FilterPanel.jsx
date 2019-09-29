@@ -1,1 +1,21 @@
-import React, { Component } from 'react';import DefaultFilterList from './DefaultFilterList';import CustomFilterList from './CustomFilterList';import {    Row,    Col} from 'reactstrap';class FilterPanel extends Component {    render() {        return (            <Row>                <Col xs={5} style={{ padding: 0 }}>                    <CustomFilterList />                </Col>                <Col xs={7}>                    <Col xs={11}>                        <DefaultFilterList />                    </Col>                    <Col xs={1} />                </Col>            </Row>        );    }}export default FilterPanel;
+import React, { Component } from 'react';
+import DefaultFilterList from './DefaultFilterList';
+import CustomFilterList from './CustomFilterList';
+import { Row, Col } from 'reactstrap';
+
+class FilterPanel extends Component {
+    render() {
+        return (
+            <Row>
+                <Col sm={6}>
+                    <CustomFilterList />
+                </Col>
+                <Col sm={6}>
+                    <DefaultFilterList />
+                </Col>
+            </Row>
+        );
+    }
+}
+
+export default FilterPanel;

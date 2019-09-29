@@ -1,31 +1,30 @@
-.input-size{
+.input-size {
     height: 62px;
 }
 
-.button-size{
+.button-size {
     height: 62px;
 }
 
-.default-size{
+.default-size {
     height: 50px;
 }
 
-.delete-button{
-    height: 50px;
-    width: 97.39px;
-}
-
-.delete-button{
+.delete-button {
     height: 50px;
     width: 97.39px;
 }
 
-.add-button{
-    height: 62px;
-    width: 97.39px
+.delete-button {
+    height: 50px;
+    width: 97.39px;
 }
 
-.zero-padding{
+.add-button {
+    height: 62px;
+    width: 97.39px;
+}
+
+.zero-padding {
     padding: 0px;
 }
-

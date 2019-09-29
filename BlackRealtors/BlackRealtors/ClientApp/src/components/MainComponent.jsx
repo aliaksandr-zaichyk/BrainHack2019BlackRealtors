@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, Button } from 'reactstrap';
+import { Row, Col, Card, CardBody, Button, Container } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Map from './mapComponents/MapComponent';
@@ -21,36 +21,34 @@ class MainComponent extends Component {
         }
 
         let sendObject = {
-      defaultFilters: filters,
+            defaultFilters: filters,
             customPoints: points
         };
 
         HandleApi.sendData(sendObject);
     };
-    HandleApi.sendData(sendObject);
-  }
 
-  render() {
-    return (
-      <Row>
-        <Col xs={5} >
-          <Col xs={6}>
-          </Col>
-          <Col xs={6}>
-            <Card>
-              <Map />
-            </Card>
-          </Col>
-        </Col>
-        <Col xs={7}>
-          <FilterPanel />
-        </Col>
-        <Button
-          onClick={this.sendData}
-        >SEND</Button>
-      </Row>
-    );
-  }
+    render() {
+        return (
+            <Container>
+                <Row>
+                    <Col sm={6} xs={12}>
+                        <Card>
+                            <CardBody>
+                                <Map />
+                            </CardBody>
+                        </Card>
+                    </Col>
+                    <Col sm={6} xs={12}>
+                        <Row>
+                            <FilterPanel />
+                            <Button onClick={this.sendData}>SEND</Button>
+                        </Row>
+                    </Col>
+                </Row>
+            </Container>
+        );
+    }
 }
 
 const mapStateToProps = state => {
@@ -58,23 +56,12 @@ const mapStateToProps = state => {
         points: state.points
     };
 };
-const mapStateToProps = (state) => {
-  return {
-    points: state.points
-  }
-}
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({}, dispatch);
 };
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-  }, dispatch)
-}
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(MainComponent);
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainComponent);
