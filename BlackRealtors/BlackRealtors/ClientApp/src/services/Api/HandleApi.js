@@ -1,8 +1,7 @@
 import axios from 'axios';
-import {BASE_SEARCH_URL} from '../../resources/urls';
+import { BASE_SEARCH_URL } from '../../resources/urls';
 
 class HandleApi {
-    
     static sendData(data) {
         return axios
             .post(BASE_SEARCH_URL, data)
@@ -11,7 +10,7 @@ class HandleApi {
             })
             .catch(err => {
                 console.log(err);
-            })
+            });
     }
 }
 
