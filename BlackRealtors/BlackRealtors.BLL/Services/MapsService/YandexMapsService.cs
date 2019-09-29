@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 
+using BlackRealtors.BLL.Models;
 using BlackRealtors.Core.Configurations;
 using BlackRealtors.Core.Constants;
 using BlackRealtors.Core.Models;
@@ -29,7 +30,7 @@ namespace BlackRealtors.BLL.Services.MapsService
                                           );
         }
 
-        public async Task<IEnumerable<Coordinates>> SearchOrganizationsByTypeAsync(
+        public async Task<IEnumerable<OrganizationModel>> SearchOrganizationsByTypeAsync(
             string organizationType,
             string city
         )
@@ -41,7 +42,7 @@ namespace BlackRealtors.BLL.Services.MapsService
                     if (!OrganizationType.ValidOrganizationType(organizationType) ||
                         !Cities.ValidCity(city))
                     {
-                        return Enumerable.Empty<Coordinates>();
+                        return Enumerable.Empty<OrganizationModel>();
                     }
 
                     var responseMessage =
@@ -50,12 +51,12 @@ namespace BlackRealtors.BLL.Services.MapsService
                             $"apikey={HttpUtility.UrlEncode(_yandexMapsApiConfiguration.ApiKey)}" +
                             $"&lang={HttpUtility.UrlEncode(_yandexMapsApiConfiguration.Language)}" +
                             $"&text={HttpUtility.UrlEncode(organizationType + " " + city)}" +
-                            $"&results=500"
+                            "&results=500"
                         );
 
                     if (!responseMessage.IsSuccessStatusCode)
                     {
-                        return Enumerable.Empty<Coordinates>();
+                        return Enumerable.Empty<OrganizationModel>();
                     }
 
                     var response = await responseMessage.Content.ReadAsStringAsync();
@@ -63,27 +64,38 @@ namespace BlackRealtors.BLL.Services.MapsService
 
                     var features = parsedResponse.SelectToken("features");
 
-                    var coordinates = new List<Coordinates>();
+                    var organizations = new List<OrganizationModel>();
 
                     foreach (var feature in features)
                     {
                         var jsonCoordinatesLong = feature.SelectToken("geometry.coordinates[0]");
                         var jsonCoordinatesLat = feature.SelectToken("geometry.coordinates[1]");
+                        var jsonName = feature.SelectToken("properties.CompanyMetaData.name");
+                        var jsonPhone = feature.SelectToken(
+                            "properties.CompanyMetaData.Phones[0].formatted"
+                        );
+                        var jsonUrl = feature.SelectToken("properties.CompanyMetaData.url");
 
-                        coordinates.Add(
-                            new Coordinates
+                        organizations.Add(
+                            new OrganizationModel
                             {
-                                Longitude = jsonCoordinatesLong.Value<double>(),
-                                Latitude = jsonCoordinatesLat.Value<double>()
+                                Name = jsonName.Value<string>(),
+                                Phone = jsonPhone.Value<string>(),
+                                Url = jsonUrl.Value<string>(),
+                                Coordinates = new Coordinates
+                                {
+                                    Longitude = jsonCoordinatesLong.Value<double>(),
+                                    Latitude = jsonCoordinatesLat.Value<double>()
+                                }
                             }
                         );
                     }
 
-                    return coordinates;
+                    return organizations;
                 }
                 catch
                 {
-                    return Enumerable.Empty<Coordinates>();
+                    return Enumerable.Empty<OrganizationModel>();
                 }
             }
         }
