@@ -2,6 +2,7 @@ import numpy as np
 from src.prob import mult_prob, sum_prob, mult_prob_i, heat_map_coord
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import normalize
+from PIL import Image
 
 DATA_SHAPE = (200, 200)
 BORDER1 = (53.610826, 23.777779)
@@ -61,10 +62,25 @@ def getScore(all_orgs):
 
     heatmap = sum_prob( mult_prob_i(probs_i), RADIUS)
 
-    heatmap = normalize(heatmap, norm='l2')
+    plt.axis('off')
+    plt.imshow( heatmap ), cmap='Greys', interpolation='spline36' )
+    plt.savefig('map.png', bbox_inches='tight', pad_inches=0)
+
+    img = Image.open('map.png')
+    img = img.convert("RGBA")
+    datas = img.getdata()
+
 
     plt.imshow( heatmap )
     plt.show()
+
+    newData = []
+    for item in datas:
+        avg = (item[0] + item[1] + item[2]) // 3
+        newData.append((0, 255, 0, 255-avg))
+    
+    img.putdata(newData)
+    img.save("final_map.png", "PNG")
 
 
 
