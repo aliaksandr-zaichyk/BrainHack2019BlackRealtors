@@ -37,9 +37,10 @@ def getScore(all_orgs):
 
     if ScoreMemo.is_empty():
         for categoryDict in all_orgs:
-            category = categoryDict['organizationType']
+            category = str(categoryDict['organizationType'])
             detailed_orgs = categoryDict['organizations']
-            
+            if detailed_orgs is None:
+                continue
 
             orgs = [coord.to_idx(org['coordinates']['longitude'], org['coordinates']['latitude']) for org in detailed_orgs]
             for sig_id in range(0, 4):
@@ -47,7 +48,7 @@ def getScore(all_orgs):
             
     probs_i = list()
     for categoryDict in all_orgs:
-        category = categoryDict['organizationType']
+        category = str(categoryDict['organizationType'])
         detailed_orgs = categoryDict['organizations']
         sig_id = categoryDict['importanceLevel']
 
