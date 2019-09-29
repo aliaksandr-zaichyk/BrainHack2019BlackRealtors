@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using System.Linq;
+
+using FluentValidation;
 
 namespace BlackRealtors.Api.Models.Request.Validators
 {
@@ -6,7 +8,8 @@ namespace BlackRealtors.Api.Models.Request.Validators
     {
         public CalculatePScoreViewModelValidator()
         {
-
+            RuleForEach(x => x.DefaultFilters)
+                .SetValidator(new OrganizationFilterViewModelValidator());
         }
     }
 }

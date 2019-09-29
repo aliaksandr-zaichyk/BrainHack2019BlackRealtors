@@ -100,7 +100,7 @@ namespace BlackRealtors.Api
                 {
                     Facade.RegisterMappings(cfg);
 
-                    cfg.CreateMap<OrganizationsFilterViewModel, OrganizationsFilterModel>()
+                    cfg.CreateMap<OrganizationFilterViewModel, OrganizationsFilterModel>()
                        .ReverseMap();
 
                     cfg.CreateMap<WeightedCoordinatesViewModel, WeightedCoordinatesModel>()

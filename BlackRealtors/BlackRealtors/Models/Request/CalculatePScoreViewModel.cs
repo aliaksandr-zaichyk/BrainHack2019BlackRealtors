@@ -6,7 +6,7 @@ namespace BlackRealtors.Api.Models.Request
 {
     public class CalculatePScoreViewModel
     {
-        public IEnumerable<OrganizationsFilterViewModel> DefaultFilters { get; set; }
+        public IEnumerable<OrganizationFilterViewModel> DefaultFilters { get; set; }
         public IEnumerable<Coordinates> CustomPoints { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace BlackRealtors.Api.Models.Request
 {
-    public class OrganizationsFilterViewModel
+    public class OrganizationFilterViewModel
     {
         public string OrganizationType { get; set; }
         public ImportanceLevel ImportanceLevel { get; set; }
