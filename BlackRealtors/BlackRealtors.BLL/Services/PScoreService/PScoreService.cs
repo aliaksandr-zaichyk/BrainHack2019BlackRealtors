@@ -71,14 +71,22 @@ namespace BlackRealtors.BLL.Services.PScoreService
 
                     pScoreModels.AddRange(GetNotSelectedOrganizationTypes(pScoreModels));
 
-                    foreach (var coor in customPoints)
-                        pScoreModels.Add(
-                            new PScoreModel
-                            {
-                                OrganizationType = string.Empty,
-                                ImportanceLevel = ImportanceLevel.High
-                            }
-                        );
+                    pScoreModels.Add(
+                        new PScoreModel
+                        {
+                            OrganizationType = string.Empty,
+                            ImportanceLevel = ImportanceLevel.High,
+                            Organizations = customPoints.Select(
+                                x => new OrganizationModel
+                                {
+                                    Coordinates = new Coordinates
+                                    {
+                                        Longitude = x.Longitude, Latitude = x.Latitude
+                                    }
+                                }
+                            )
+                        }
+                    );
 
                     var responseMessage = await client.PostAsync(
                         $"{_pScoreConfiguration.BaseUrl}{PostPizdatiyScoreApi}",
