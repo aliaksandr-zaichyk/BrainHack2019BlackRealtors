@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, CardBody, Button, Container } from 'reactstrap';
+import {
+    Row,
+    Col,
+    Card,
+    CardFooter,
+    CardBody,
+    Button,
+    Container
+} from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Map from './mapComponents/MapComponent';
@@ -32,18 +40,22 @@ class MainComponent extends Component {
         return (
             <Container fluid>
                 <Row>
-                    <Col sm={6} xs={12}>
+                    <Col md={6} xs={12}>
                         <Card>
                             <CardBody>
                                 <Map />
                             </CardBody>
                         </Card>
                     </Col>
-                    <Col sm={6} xs={12}>
-                        <Row>
-                            <FilterPanel />
-                            <Button onClick={this.sendData}>SEND</Button>
-                        </Row>
+                    <Col md={6} xs={12}>
+                        <Card>
+                            <CardBody>
+                                <FilterPanel />
+                            </CardBody>
+                            <CardFooter>
+                                <Button onClick={this.sendData}>SEND</Button>
+                            </CardFooter>
+                        </Card>
                     </Col>
                 </Row>
             </Container>

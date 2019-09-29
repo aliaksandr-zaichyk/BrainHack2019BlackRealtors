@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
 import { defaultFilters } from '../../resources/filterData';
 import DefaultFilterItem from './DefaultFilterItem';
-import { Row, Col, Button, Input, Card, Alert } from 'reactstrap';
+import {
+    Row,
+    Col,
+    Button,
+    Input,
+    Card,
+    Alert,
+    CardTitle,
+    CardBody,
+    CardFooter
+} from 'reactstrap';
 import '../../styles/filterStyles.css';
 
 class DefaultFilterList extends Component {
@@ -37,44 +47,55 @@ class DefaultFilterList extends Component {
     render() {
         return (
             <Card>
-                <Alert color='danger'>
-                    <h4>Default Filters</h4>
-                </Alert>
-                {this.state.items.map((item, index) => (
-                    <DefaultFilterItem
-                        key={index}
-                        item={item}
-                        deleteItem={this.deleteFilter}
-                    />
-                ))}
-                <Row>
-                    <Col xs='9'>
-                        <Input
-                            type='select'
-                            value={this.state.selectValue}
-                            onChange={this.handleChange}
-                        >
-                            {this.state.filters
-                                .filter(
-                                    x => !this.state.items.find(y => y === x)
-                                )
-                                .map((filter, index) => (
-                                    <option id='option' key={index}>
-                                        {filter}
-                                    </option>
-                                ))}
-                        </Input>
-                    </Col>
-                    <Col xs='3'>
-                        <Button
-                            outline
-                            color='success'
-                            onClick={this.addFilter}
-                        >
-                            Add Filter
-                        </Button>
-                    </Col>
-                </Row>
+                <CardTitle>
+                    <Alert color='danger'>
+                        <h4>Default Filters</h4>
+                    </Alert>
+                </CardTitle>
+                <CardBody>
+                    {this.state.items.length !== 0 ? (
+                        this.state.items.map((item, index) => (
+                            <DefaultFilterItem
+                                key={index}
+                                item={item}
+                                deleteItem={this.deleteFilter}
+                            />
+                        ))
+                    ) : (
+                        <p>No filters...</p>
+                    )}
+                </CardBody>
+                <CardFooter>
+                    <Row>
+                        <Col xs='8'>
+                            <Input
+                                type='select'
+                                value={this.state.selectValue}
+                                onChange={this.handleChange}
+                            >
+                                {this.state.filters
+                                    .filter(
+                                        x =>
+                                            !this.state.items.find(y => y === x)
+                                    )
+                                    .map((filter, index) => (
+                                        <option id='option' key={index}>
+                                            {filter}
+                                        </option>
+                                    ))}
+                            </Input>
+                        </Col>
+                        <Col xs='4'>
+                            <Button
+                                outline
+                                color='success'
+                                onClick={this.addFilter}
+                            >
+                                Add Filter
+                            </Button>
+                        </Col>
+                    </Row>
+                </CardFooter>
             </Card>
         );
     }

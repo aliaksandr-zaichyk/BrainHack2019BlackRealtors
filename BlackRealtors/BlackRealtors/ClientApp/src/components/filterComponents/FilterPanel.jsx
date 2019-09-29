@@ -7,10 +7,10 @@ class FilterPanel extends Component {
     render() {
         return (
             <Row>
-                <Col sm={6}>
+                <Col xs={12} xl={6}>
                     <CustomFilterList />
                 </Col>
-                <Col sm={6}>
+                <Col xs={12} xl={6}>
                     <DefaultFilterList />
                 </Col>
             </Row>

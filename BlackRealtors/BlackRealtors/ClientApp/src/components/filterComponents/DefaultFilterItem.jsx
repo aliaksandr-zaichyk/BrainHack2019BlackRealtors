@@ -22,9 +22,9 @@ class DefaultFilterItem extends Component {
     render() {
         return (
             <Row>
-                <Col xs={5}>
+                <Col xs={4}>
                     <Input id='filter' type='hidden' value={this.props.item} />
-                    <Alert>{this.props.item}</Alert>
+                    {this.props.item}
                 </Col>
                 <Col xs={4}>
                     <Input
@@ -38,7 +38,7 @@ class DefaultFilterItem extends Component {
                         ))}
                     </Input>
                 </Col>
-                <Col xs={3}>
+                <Col xs={4}>
                     <Button
                         outline
                         color='danger'

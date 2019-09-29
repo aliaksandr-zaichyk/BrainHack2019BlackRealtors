@@ -5,11 +5,9 @@ import '../../styles/filterStyles.css';
 class CustomFilterList extends Component {
     render() {
         return (
-            <Row>
-                <Col xs='9'>
-                    <Alert>{this.props.item.address}</Alert>
-                </Col>
-                <Col xs='3'>
+            <Row className='margin-height'>
+                <Col xs='8'>{this.props.item.address}</Col>
+                <Col xs='4'>
                     <Button
                         outline
                         color='danger'

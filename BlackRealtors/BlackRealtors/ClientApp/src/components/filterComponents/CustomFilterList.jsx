@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Row, Col, Card, Input, Button, Alert } from 'reactstrap';
+import {
+    Row,
+    Col,
+    Card,
+    CardTitle,
+    CardBody,
+    Input,
+    Button,
+    Alert,
+    CardFooter
+} from 'reactstrap';
 import CustomFilterItem from './CustomFilterItem';
 import {
     addCustomPoint,
@@ -41,30 +51,40 @@ class CustomFilterList extends Component {
     render() {
         return (
             <Card>
-                <Alert color='primary'>
-                    <h4>Custom Addresses</h4>
-                </Alert>
-                {this.state.items.map((item, index) => (
-                    <CustomFilterItem
-                        key={index}
-                        item={item}
-                        deleteItem={this.deleteFilter}
-                    />
-                ))}
-                <Row>
-                    <Col xs='9'>
-                        <Input id='address' />
-                    </Col>
-                    <Col xs='3'>
-                        <Button
-                            outline
-                            color='success'
-                            onClick={this.addFilter}
-                        >
-                            Add Address
-                        </Button>
-                    </Col>
-                </Row>
+                <CardTitle>
+                    <Alert color='primary'>
+                        <h4>Custom Addresses</h4>
+                    </Alert>
+                </CardTitle>
+                <CardBody>
+                    {this.state.items.length !== 0 ? (
+                        this.state.items.map((item, index) => (
+                            <CustomFilterItem
+                                key={index}
+                                item={item}
+                                deleteItem={this.deleteFilter}
+                            />
+                        ))
+                    ) : (
+                        <p>No items...</p>
+                    )}
+                </CardBody>
+                <CardFooter>
+                    <Row>
+                        <Col xs='8'>
+                            <Input id='address' />
+                        </Col>
+                        <Col xs='4'>
+                            <Button
+                                outline
+                                color='success'
+                                onClick={this.addFilter}
+                            >
+                                Add Address
+                            </Button>
+                        </Col>
+                    </Row>
+                </CardFooter>
             </Card>
         );
     }
