@@ -4,29 +4,18 @@ import {
     Map,
     FullscreenControl,
     SearchControl,
-    ZoomControl
+    ZoomControl,
+    Rectangle
 } from 'react-yandex-maps';
-import YandexApi from '../../services/Api/YandexApi';
+import { connect } from 'react-redux';
+import color from 'color';
 
 class MapComponent extends Component {
-    getValue = () => {
-        YandexApi.getCoordinates('ул.Дзержинского 25, Беларусь, Гродно').then(
-            point => {
-                let p =
-                    point.data.response.GeoObjectCollection.featureMember[0]
-                        .GeoObject.Point.pos;
-                let arr = p.split(' ');
-                p = `${arr[1]}, ${arr[0]}`;
-                console.log(
-                    point.data.response.GeoObjectCollection.featureMember[0]
-                        .GeoObject.Point.pos
-                );
-                console.log(p);
-            }
-        );
-    };
-
     render() {
+        const { data } = this.props;
+        const r = 0.001859;
+        const rr = 0.0014891;
+
         return (
             <YMaps>
                 <Map
@@ -34,13 +23,40 @@ class MapComponent extends Component {
                     width='auto'
                     height='80vh'
                 >
-                    <FullscreenControl />
-                    <SearchControl options={{ float: 'right' }} />
-                    <ZoomControl options={{ float: 'right' }} />
+                    {data &&
+                        data.map(
+                            ({
+                                coordinates: { longitude, latitude },
+                                weight
+                            }) => (
+                                <Rectangle
+                                    geometry={[
+                                        [longitude - r, latitude - rr],
+                                        [longitude + r, latitude + rr]
+                                    ]}
+                                    options={{
+                                        fillColor: color
+                                            .rgb(
+                                                255 - weight * 255,
+                                                weight * 255,
+                                                0,
+                                                70
+                                            )
+                                            .hex(),
+                                        opacity: 0.7,
+                                        outline: false
+                                    }}
+                                />
+                            )
+                        )}
                 </Map>
             </YMaps>
         );
     }
 }
 
-export default MapComponent;
+const mapStateToProps = state => ({
+    data: state.heatMapData
+});
+
+export default connect(mapStateToProps)(MapComponent);

@@ -68,10 +68,18 @@ class heat_map_coord:
         self.y_scale = h / (y2 - y1)
     
     def to_idx(self, x, y):
-        dx, dy = x - self.topleft[0], y - self.topleft[1]
+        dx, dy = y - self.topleft[0], x - self.topleft[1]
         i, j = np.round( dx*self.x_scale ) , np.round( dy*self.y_scale )
         i = int( np.clip( i, 0, self.shape[0]-1 ) )
         j = int( np.clip( j, 0, self.shape[1]-1 ) )
+        
+        # print(x, y)
+        # print(i, j)
+        # print()
+        # print(self.topleft[0], self.topleft[1])
+        # # print(x, y)
+        # exit(0)
+
         return i, j
 
 # org1 = mult_prob( (200, 200), [(50, 50), (100, 150), (199, 0)], 5 )

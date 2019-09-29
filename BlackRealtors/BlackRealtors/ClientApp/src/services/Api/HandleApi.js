@@ -6,10 +6,9 @@ class HandleApi {
         return axios
             .post(BASE_SEARCH_URL, data)
             .then(response => {
-                if(response !== null && undefined){
+                if (response) {
                     return response.data;
-                }
-                else{
+                } else {
                     return Error('response is null');
                 }
             })

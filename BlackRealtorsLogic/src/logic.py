@@ -1,17 +1,18 @@
 import numpy as np
 from src.prob import mult_prob, sum_prob, mult_prob_i, heat_map_coord
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import normalize
 
 DATA_SHAPE = (200, 200)
-BORDER1 = (53.607187, 23.702459)
-BORDER2 = (53.759638, 24.019003)
-HEATMAP_SHAPE = (100, 100)
-RADIUS = 40
+BORDER1 = (53.610826, 23.777779)
+BORDER2 = (53.718562, 23.864186)
+HEATMAP_SHAPE = (30, 30)
+RADIUS = 5
 
 
 class ScoreMemo:
     precalc = dict()
-    sig = [0, 5, 7, 25]
+    sig = [25, 15, 5, 0]
     mapping = dict()
 
 
@@ -52,17 +53,28 @@ def getScore(all_orgs):
         detailed_orgs = categoryDict['organizations']
         sig_id = categoryDict['importanceLevel']
 
+        for org in detailed_orgs:
+            print(coord.to_idx(org['coordinates']['longitude'], org['coordinates']['latitude']))
         orgs = [coord.to_idx(org['coordinates']['longitude'], org['coordinates']['latitude']) for org in detailed_orgs]
         
         probs_i.append(ScoreMemo.get_prob_by_category_sig(category, sig_id, orgs))
 
     heatmap = sum_prob( mult_prob_i(probs_i), RADIUS)
+
+    heatmap = normalize(heatmap, norm='l2')
+
+    plt.imshow( heatmap )
+    plt.show()
+
+
+
     # print(heatmap.shape)
     # return heatmap
 
     result = list()
     for x in np.linspace(BORDER1[0], BORDER2[0], HEATMAP_SHAPE[0]):
         for y in np.linspace(BORDER1[1], BORDER2[1], HEATMAP_SHAPE[1]):
-            i, j = coord.to_idx(x, y)
-            result.append((x, y, heatmap[i, j]))
+            i, j = coord.to_idx(y, x)
+            print(heatmap[i, j], i, j)
+            result.append((x, y, np.power(heatmap[i, j], 0.3)))
     return result
