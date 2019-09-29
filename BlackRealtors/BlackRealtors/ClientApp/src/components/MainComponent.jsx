@@ -21,31 +21,36 @@ class MainComponent extends Component {
         }
 
         let sendObject = {
-            defaultFilteers: filters,
+      defaultFilters: filters,
             customPoints: points
         };
 
         HandleApi.sendData(sendObject);
     };
+    HandleApi.sendData(sendObject);
+  }
 
-    render() {
-        return (
-            <Row>
-                <Col xs={5}>
-                    <Col xs={6}></Col>
-                    <Col xs={6}>
-                        <Card>
-                            <Map />
-                        </Card>
-                    </Col>
-                </Col>
-                <Col xs={7}>
-                    <FilterPanel />
-                </Col>
-                <Button onClick={this.sendData}>SEND</Button>
-            </Row>
-        );
-    }
+  render() {
+    return (
+      <Row>
+        <Col xs={5} >
+          <Col xs={6}>
+          </Col>
+          <Col xs={6}>
+            <Card>
+              <Map />
+            </Card>
+          </Col>
+        </Col>
+        <Col xs={7}>
+          <FilterPanel />
+        </Col>
+        <Button
+          onClick={this.sendData}
+        >SEND</Button>
+      </Row>
+    );
+  }
 }
 
 const mapStateToProps = state => {
@@ -53,12 +58,23 @@ const mapStateToProps = state => {
         points: state.points
     };
 };
+const mapStateToProps = (state) => {
+  return {
+    points: state.points
+  }
+}
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({}, dispatch);
 };
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+  }, dispatch)
+}
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(MainComponent);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainComponent);
