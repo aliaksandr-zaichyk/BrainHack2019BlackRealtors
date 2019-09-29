@@ -60,7 +60,13 @@ namespace BlackRealtors.Api
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Add("Cache-Control", "public,max-age=0");
+                }
+            });
             app.UseSpaStaticFiles();
 
             app.UseMvc();

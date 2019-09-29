@@ -73,7 +73,7 @@ namespace BlackRealtors.BLL.Services.PScoreService
                         }
                     }
 
-                    pScoreModels.AddRange(GetNotSelectedOrganizationTypes(pScoreModels));
+                    //pScoreModels.AddRange(GetNotSelectedOrganizationTypes(pScoreModels));
 
                     if (customPoints != null)
                     {

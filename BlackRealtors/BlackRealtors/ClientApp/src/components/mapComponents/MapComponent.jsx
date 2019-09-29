@@ -23,32 +23,18 @@ class MapComponent extends Component {
                     width='auto'
                     height='80vh'
                 >
-                    {data &&
-                        data.map(
-                            ({
-                                coordinates: { longitude, latitude },
-                                weight
-                            }) => (
-                                <Rectangle
-                                    geometry={[
-                                        [longitude - r, latitude - rr],
-                                        [longitude + r, latitude + rr]
-                                    ]}
-                                    options={{
-                                        fillColor: color
-                                            .rgb(
-                                                255 - weight * 255,
-                                                weight * 255,
-                                                0,
-                                                70
-                                            )
-                                            .hex(),
-                                        opacity: 0.7,
-                                        outline: false
-                                    }}
-                                />
-                            )
-                        )}
+                    {data.length !== 0 && (
+                        <Rectangle
+                            geometry={[
+                                [53.610826, 23.777779],
+                                [53.718562, 23.864186]
+                            ]}
+                            options={{
+                                fillImageHref: '/images/final_map.png',
+                                outline: false
+                            }}
+                        />
+                    )}
                 </Map>
             </YMaps>
         );

@@ -33,7 +33,7 @@ def sum_prob(p, r):
     result = np.zeros( (N, M), dtype=float )
     tmp = np.zeros( (N+r*2, M+r*2), dtype=float )
     
-    tmp[r:N+r, r:M+r] = p;
+    tmp[r:N+r, r:M+r] = p
     
     k = np.zeros( (r*2+1, r*2+1), dtype=float )
     k[r, r] = 1.0
