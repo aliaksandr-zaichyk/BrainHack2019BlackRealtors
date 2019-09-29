@@ -79,9 +79,9 @@ namespace BlackRealtors.BLL.Services.MapsService
                         organizations.Add(
                             new OrganizationModel
                             {
-                                Name = jsonName.Value<string>(),
-                                Phone = jsonPhone.Value<string>(),
-                                Url = jsonUrl.Value<string>(),
+                                Name = jsonName?.Value<string>(),
+                                Phone = jsonPhone?.Value<string>(),
+                                Url = jsonUrl?.Value<string>(),
                                 Coordinates = new Coordinates
                                 {
                                     Longitude = jsonCoordinatesLong.Value<double>(),
@@ -93,8 +93,9 @@ namespace BlackRealtors.BLL.Services.MapsService
 
                     return organizations;
                 }
-                catch
+                catch (Exception e)
                 {
+                    Console.WriteLine(e);
                     return Enumerable.Empty<OrganizationModel>();
                 }
             }

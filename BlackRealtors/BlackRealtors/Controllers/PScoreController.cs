@@ -41,7 +41,7 @@ namespace BlackRealtors.Api.Controllers
                 return BadRequest();
             }
 
-            return Ok(_mapper.Map<WeightedCoordinatesViewModel>(coordinatesModel));
+            return Ok(_mapper.Map<IEnumerable<WeightedCoordinatesViewModel>>(coordinatesModel));
         }
     }
 }

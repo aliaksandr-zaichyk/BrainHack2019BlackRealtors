@@ -78,7 +78,7 @@ namespace BlackRealtors.Api
             );
         }
 
-        private void ConfigureContainer(IUnityContainer container)
+        public void ConfigureContainer(IUnityContainer container)
         {
             container.RegisterInstance(SetupMapper());
 

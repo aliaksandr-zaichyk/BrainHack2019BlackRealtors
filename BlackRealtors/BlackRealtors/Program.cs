@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
+using Unity.Microsoft.DependencyInjection;
+
 namespace BlackRealtors.Api
 {
     public class Program
@@ -12,6 +14,7 @@ namespace BlackRealtors.Api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                   .UseUnityServiceProvider()
+                   .UseStartup<Startup>();
     }
 }

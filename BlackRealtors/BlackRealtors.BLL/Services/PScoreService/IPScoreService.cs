@@ -8,7 +8,7 @@ namespace BlackRealtors.BLL.Services.PScoreService
 {
     public interface IPScoreService
     {
-        Task<WeightedCoordinatesModel> CalculatePScoreAsync(
+        Task<IEnumerable<WeightedCoordinatesModel>> CalculatePScoreAsync(
             IEnumerable<OrganizationsFilterModel> filters,
             IEnumerable<Coordinates> customPoints
         );

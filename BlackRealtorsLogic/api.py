@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route("/pscore", methods=['POST'])
 def searcher_from_post():
     data = json.loads(request.data)
-
+    
     hots = getScore(data)
 
     return json.dumps([{'coordinates': {'longitude':x, 'latitude':y}, 'weight':hot} for x, y, hot in hots])
