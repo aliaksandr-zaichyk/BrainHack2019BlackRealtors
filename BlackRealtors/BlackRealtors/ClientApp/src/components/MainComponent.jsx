@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Map from './mapComponents/MapComponent';
 import FilterPanel from './filterComponent./FilterPanel';
-import HandleApi from '../services/Api/HandleApi';
+import {sendData} from '../actions/actions';
 
 class MainComponent extends Component {
 
@@ -28,7 +28,7 @@ class MainComponent extends Component {
       customPoints: points
     }
 
-    HandleApi.sendData(sendObject);
+    this.props.sendData(sendObject);
   }
 
   render() {
@@ -45,10 +45,10 @@ class MainComponent extends Component {
         </Col>
         <Col xs={7}>
           <FilterPanel />
+          <Button
+            onClick={this.sendData}
+          >SEND</Button>
         </Col>
-        <Button
-          onClick={this.sendData}
-        >SEND</Button>
       </Row>
     );
   }
@@ -62,6 +62,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
+    sendData: (data) => sendData(data)
   }, dispatch)
 }
 

@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import filterReducer from '../reducers/filterReducer';
 import pointReducer from '../reducers/pointReducer';
+import handleReducer from '../reducers/handleReducer';
 
 export default function configureStore (initialState) {
 
@@ -17,8 +17,9 @@ export default function configureStore (initialState) {
   }
 
   const rootReducer = combineReducers({
-    filters: filterReducer,
-    points: pointReducer  
+    points: pointReducer,
+    heatMapData: handleReducer
+
   });
 
   return createStore(

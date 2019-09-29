@@ -1,2 +1,2 @@
-export const filterInitState = [];
 export const pointInitState = [];
+export const handleInitState = [];
