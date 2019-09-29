@@ -4,14 +4,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Map from './mapComponents/MapComponent';
 import FilterPanel from './filterComponents/FilterPanel';
-import HandleApi from '../services/Api/HandleApi';
+import {sendData} from '../actions/actions';
 
 class MainComponent extends Component {
-    sendData = () => {
-        let filters = [];
-        let points = this.props.points;
-        let filterNames = document.querySelectorAll('[id=filter]');
-        let priorities = document.querySelectorAll('[id=priority]');
+
+  sendData = () => {
+    let filters = []
+    let points = this.props.points;
+    let filterNames = document.querySelectorAll('[id=filter]');
+    let priorities = document.querySelectorAll('[id=priority]');
 
         for (let i = 0; i < filterNames.length; i++) {
             filters.push({
@@ -25,7 +26,7 @@ class MainComponent extends Component {
             customPoints: points
         };
 
-        HandleApi.sendData(sendObject);
+    this.props.sendData(sendObject);
     };
 
     render() {
@@ -45,21 +46,15 @@ class MainComponent extends Component {
                             <Button onClick={this.sendData}>SEND</Button>
                         </Row>
                     </Col>
+        </Col>
                 </Row>
             </Container>
         );
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        points: state.points
-    };
-};
 
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({}, dispatch);
-};
+    sendData: (data) => sendData(data)
 
 export default connect(
     mapStateToProps,

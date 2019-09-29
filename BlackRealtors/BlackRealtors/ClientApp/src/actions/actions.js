@@ -1,13 +1,6 @@
 import * as types from './actionTypes';
 import YandexApi from '../services/Api/YandexApi';
-
-export const addDefaultFilter = (filter) => {
-    return { type: types.ADD_DEFAULT_FILTER, payload: filter }
-}
-
-export const deleteDefaultFilter = (filter) => {
-    return { type: types.DELETE_DEFAULT_FILTER, payload: filter }
-}
+import HandleApi from '../services/Api/HandleApi';
 
 export const addCustomPointAction = (point) => {
     return { type: types.ADD_CUSTOM_POINT, payload: point }
@@ -15,6 +8,19 @@ export const addCustomPointAction = (point) => {
 
 export const deleteCustomPoint = (point) => {
     return { type: types.DELETE_CUSTOM_POINT, payload: point }
+}
+
+export const getDataFromApi = (data) => {
+    return {type: types.GET_DATA_FROM_API, payload: data}
+}
+
+export const sendData = data => dispatch => {
+      HandleApi
+      .sendData(data)
+      .then(response => dispatch(getDataFromApi(response)))
+      .catch(err => {
+          console.log(err);
+      })
 }
 
 export const addCustomPoint = address => dispatch => {
