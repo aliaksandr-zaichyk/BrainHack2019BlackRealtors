@@ -16,7 +16,6 @@ class ScoreMemo:
     sig = [25, 15, 5, 0]
     mapping = dict()
 
-
     @staticmethod
     def get_prob_by_category_sig(categoty, sig_id, orgs):
         if (categoty, sig_id) not in ScoreMemo.precalc:
@@ -68,6 +67,7 @@ def getScore(all_orgs):
 
     plt.axis('off')
     plt.imshow( heatmap, cmap='Greys', interpolation='spline36' )
+    plt.gca().invert_yaxis()
     plt.savefig('map.png', bbox_inches='tight', pad_inches=0)
 
     img = Image.open('map.png')
